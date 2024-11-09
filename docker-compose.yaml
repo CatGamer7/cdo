@@ -1,0 +1,42 @@
+volumes:
+    db_mount:
+
+
+services:
+    db:
+        build: ./db
+
+        ports:
+            - 33306:3306
+
+        command: --lower_case_table_names=1
+
+        volumes:
+            - db_mount:/var/lib/mysql
+            
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            start_period: 5s
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+    backend:
+        build: .
+
+        ports:
+            - 8008:8000
+
+        volumes:
+            - /gmt/log:/source/gmt/log
+
+        environment:
+            - DB_NAME=games
+            - DB_USER=games_client
+            - DB_PASSWORD=basedbased
+            - DB_HOST=db
+            - DB_PORT=3306
+
+        depends_on:
+            db:
+                condition: service_healthy
