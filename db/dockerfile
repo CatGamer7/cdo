@@ -1,0 +1,6 @@
+FROM mariadb:11
+
+ENV MARIADB_ROOT_PASSWORD basedbasedbased
+ENV MARIADB_DATABASE games
+
+COPY /user.sql /docker-entrypoint-initdb.d/
