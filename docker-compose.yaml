@@ -5,7 +5,7 @@ volumes:
 
 services:
     db:
-        build: ./db
+        image: gamercat7/cdo_db
 
         ports:
             - 33306:3306
@@ -23,7 +23,7 @@ services:
             retries: 5
 
     backend:
-        build: .
+        image: gamercat7/cdo_backend
 
         ports:
             - 8008:8000
