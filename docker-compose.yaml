@@ -1,5 +1,6 @@
 volumes:
     db_mount:
+    backend_mount:
 
 
 services:
@@ -28,7 +29,7 @@ services:
             - 8008:8000
 
         volumes:
-            - /gmt/log:/source/gmt/log
+            - backend_mount:/source/gmt/log
 
         environment:
             - DB_NAME=games
